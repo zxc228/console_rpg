@@ -14,5 +14,6 @@ public class PowerfulAttackDecorator extends Action {
         System.out.println("Enhancing attack with additional strength.");
         character.setStrength(character.getStrength() + 5);
         wrappedAction.execute(character, target);
+        character.setStrength(character.getStrength() - 5);
     }
 }

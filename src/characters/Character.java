@@ -1,51 +1,30 @@
 package src.characters;
 
-import src.states.State;
 import src.states.NormalState;
-import src.states.WoundedState;
+import src.states.State;
 import src.states.ParalyzedState;
+import src.states.WoundedState;
 
 public abstract class Character {
     protected String name;
     protected int strength;
     protected int endurance;
     protected int agility;
-    private State state;
+    protected State state;
 
     public Character(String name, int strength, int endurance, int agility) {
         this.name = name;
         this.strength = strength;
         this.endurance = endurance;
         this.agility = agility;
-        this.state = new NormalState();
+        this.state = new NormalState(); 
     }
 
     public abstract void attack(Character target);
-    
-    public void setState(State state) {
-        this.state = state;
-    }
 
-    public void performAction() {
-        state.handle(this);
+    public void defend() {
+        state.handle(this); 
     }
-
-    public void transitionToNormal() {
-        setState(new NormalState());
-        System.out.println(this.name + " transitions to normal state.");
-    }
-
-    public void transitionToWounded() {
-        setState(new WoundedState());
-        System.out.println(this.name + " transitions to wounded state.");
-    }
-
-    public void transitionToParalyzed() {
-        setState(new ParalyzedState());
-        System.out.println(this.name + " transitions to paralyzed state.");
-    }
-
-    public abstract void defend();
 
     public String getName() {
         return name;
@@ -77,5 +56,37 @@ public abstract class Character {
 
     public void setAgility(int agility) {
         this.agility = agility;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public void transitionToNormal() {
+        this.state = new NormalState();
+    }
+
+    public void transitionToWounded() {
+        this.state = new WoundedState();
+    }
+
+    public void transitionToParalyzed() {
+        this.state = new ParalyzedState();
+    }
+
+    public void performAction() {
+        state.handle(this); 
+    }
+    
+    public void displayStats() {
+        System.out.printf("Name      : %s%n", this.name);
+        System.out.printf("Strength  : %d%n", this.strength);
+        System.out.printf("Endurance : %d%n", this.endurance);
+        System.out.printf("Agility   : %d%n", this.agility);
+        System.out.printf("State     : %s%n", this.state.getClass().getSimpleName());
     }
 }

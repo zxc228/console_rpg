@@ -1,159 +1,184 @@
 @startuml
 
-!define RECTANGLE class
-!define TEXT class
+package characters {
+    class Character {
+        - String name
+        - int strength
+        - int endurance
+        - int agility
+        - State state
+        + attack(Character target)
+        + setState(State state)
+        + getName()
+        + getStrength()
+        + setStrength(int strength)
+        + getEndurance()
+        + setEndurance(int endurance)
+        + getAgility()
+        + setAgility(int agility)
+        + displayStats()
+    }
 
-RECTANGLE "Main" as Main {
-  +main(args: String[])
+    class Hero extends Character {
+        + Hero(String name, int strength, int endurance, int agility)
+        + attack(Character target)
+        + defend()
+    }
+
+    class Enemy extends Character {
+        + Enemy(String name, int strength, int endurance, int agility)
+        + decideNextAction(Character target)
+    }
 }
 
-RECTANGLE "GameController" as GameController {
-  -DamageCalculator damageCalculator
-  -Hero hero
-  -Enemy enemy
-  -Strategy strategy
-  -Action action
-  -Scanner scanner
-  -int enemyCount
-  -int totalDamageDealt
-  -int totalDamageReceived
-  -int heroStrengthIncrease
-  -int heroEnduranceIncrease
-  -int heroAgilityIncrease
-  -int enemyStrengthIncrease
-  -int enemyEnduranceIncrease
-  -int enemyAgilityIncrease
-  +GameController()
-  +void initializeGame()
-  -void chooseDifficulty()
-  -void chooseEnemy()
-  -void chooseStrategy()
-  -void defineAction()
-  -void displayStats()
-  +void startBattle()
-  +void runGame()
-  -void displayFinalStats()
-  +Hero getHero()
-  +Enemy getEnemy()
+package states {
+    interface State {
+        + handle(Character character)
+    }
+
+    class NormalState implements State {
+        + handle(Character character)
+        + toString()
+    }
+
+    class WoundedState implements State {
+        + handle(Character character)
+        + toString()
+    }
+
+    class ParalyzedState implements State {
+        + handle(Character character)
+        + toString()
+    }
 }
 
-RECTANGLE "Character" as Character {
-  -String name
-  -int strength
-  -int endurance
-  -int agility
-  -State state
-  +Character(String name, int strength, int endurance, int agility)
-  +void attack(Character target)
-  +void defend()
-  +String getName()
-  +void setName(String name)
-  +int getStrength()
-  +void setStrength(int strength)
-  +int getEndurance()
-  +void setEndurance(int endurance)
-  +int getAgility()
-  +void setAgility(int agility)
-  +void setState(State state)
-  +void performAction()
+package strategies {
+    interface Strategy {
+        + execute(Character character)
+    }
+
+    class AggressiveStrategy implements Strategy {
+        + execute(Character character)
+    }
+
+    class BalancedStrategy implements Strategy {
+        + execute(Character character)
+    }
+
+    class DefensiveStrategy implements Strategy {
+        + execute(Character character)
+    }
 }
 
-RECTANGLE "Hero" as Hero {
-  +Hero(String name, int strength, int endurance, int agility)
+package actions {
+    abstract class Action {
+        + execute(Character character, Character target)
+    }
+
+    class NormalAttackDecorator extends Action {
+        - Action wrappedAction
+        + NormalAttackDecorator(Action wrappedAction)
+        + execute(Character character, Character target)
+    }
+
+    class PowerfulAttackDecorator extends Action {
+        - Action wrappedAction
+        + PowerfulAttackDecorator(Action wrappedAction)
+        + execute(Character character, Character target)
+    }
+
+    class CriticalStrikeDecorator extends Action {
+        - Action wrappedAction
+        + CriticalStrikeDecorator(Action wrappedAction)
+        + execute(Character character, Character target)
+    }
 }
 
-RECTANGLE "Enemy" as Enemy {
-  +Enemy(String name, int strength, int endurance, int agility)
-  +void decideNextAction(Character target)
+package factories {
+    interface EnemyFactory {
+        + createWarrior()
+        + createSorcerer()
+        + createMutant()
+    }
+
+    class JungleEnemyFactory implements EnemyFactory {
+        + createWarrior()
+        + createSorcerer()
+        + createMutant()
+    }
+
+    class SeaEnemyFactory implements EnemyFactory {
+        + createWarrior()
+        + createSorcerer()
+        + createMutant()
+    }
 }
 
-RECTANGLE "State" as State {
-  +void handle(Character character)
+package controllers {
+    class GameController {
+        - DamageCalculator damageCalculator
+        - Hero hero
+        - Enemy enemy
+        - Strategy strategy
+        - Action action
+        - Scanner scanner
+        - int enemyCount
+        - int totalDamageDealt
+        - int totalDamageReceived
+        - int difficulty
+        - int heroStrengthIncrease
+        - int heroEnduranceIncrease
+        - int heroAgilityIncrease
+        + GameController()
+        + initializeGame()
+        + chooseDifficulty()
+        + chooseEnemy()
+        + chooseStrategy()
+        + defineAction()
+        + startBattle()
+        + runGame()
+        + displayFinalStats()
+        + pause(int milliseconds)
+        + updateState(Character character)
+        + getHero()
+        + getEnemy()
+    }
 }
 
-RECTANGLE "NormalState" as NormalState {
-  +void handle(Character character)
+package utilities {
+    class DamageCalculator {
+        + calculateDamage(Character attacker, Character target)
+        + getInstance()
+    }
+    DamageCalculator --|> GameController
 }
 
-RECTANGLE "WoundedState" as WoundedState {
-  +void handle(Character character)
-}
-
-RECTANGLE "ParalyzedState" as ParalyzedState {
-  +void handle(Character character)
-}
-
-RECTANGLE "Strategy" as Strategy {
-  +void execute(Character character)
-}
-
-RECTANGLE "AggressiveStrategy" as AggressiveStrategy {
-  +void execute(Character character)
-}
-
-RECTANGLE "BalancedStrategy" as BalancedStrategy {
-  +void execute(Character character)
-}
-
-RECTANGLE "Action" as Action {
-  +void execute(Character character, Character target)
-}
-
-RECTANGLE "PowerfulAttackDecorator" as PowerfulAttackDecorator {
-  -Action wrappedAction
-  +PowerfulAttackDecorator(Action wrappedAction)
-  +void execute(Character character, Character target)
-}
-
-RECTANGLE "CriticalStrikeDecorator" as CriticalStrikeDecorator {
-  -Action wrappedAction
-  +CriticalStrikeDecorator(Action wrappedAction)
-  +void execute(Character character, Character target)
-}
-
-RECTANGLE "DamageCalculator" as DamageCalculator {
-  -static DamageCalculator instance
-  +static DamageCalculator getInstance()
-  +int calculateDamage(Character attacker, Character target)
-}
-
-RECTANGLE "EnemyFactory" as EnemyFactory {
-  +Enemy createWarrior()
-  +Enemy createSorcerer()
-  +Enemy createMutant()
-}
-
-RECTANGLE "JungleEnemyFactory" as JungleEnemyFactory {
-  +Enemy createWarrior()
-  +Enemy createSorcerer()
-  +Enemy createMutant()
-}
-
-RECTANGLE "SeaEnemyFactory" as SeaEnemyFactory {
-  +Enemy createWarrior()
-  +Enemy createSorcerer()
-  +Enemy createMutant()
-}
-
-Main --> GameController
-GameController --> Hero
-GameController --> Enemy
-GameController --> Strategy
-GameController --> Action
-GameController --> DamageCalculator
+Character "1" -- "1" State
 Character <|-- Hero
 Character <|-- Enemy
-Character --> State
-Character --> Action
+Hero "1" -- "1" Strategy
+Hero "1" -- "1" Action
+
 State <|-- NormalState
 State <|-- WoundedState
 State <|-- ParalyzedState
+
 Strategy <|-- AggressiveStrategy
 Strategy <|-- BalancedStrategy
+Strategy <|-- DefensiveStrategy
+
+Action <|-- NormalAttackDecorator
 Action <|-- PowerfulAttackDecorator
 Action <|-- CriticalStrikeDecorator
-DamageCalculator o-- DamageCalculator : singleton
+
 EnemyFactory <|-- JungleEnemyFactory
 EnemyFactory <|-- SeaEnemyFactory
+
+GameController "1" -- "1" Hero
+GameController "1" -- "1" Enemy
+GameController "1" -- "1" Strategy
+GameController "1" -- "1" Action
+GameController "1" -- "1" DamageCalculator
+GameController "1" -- "1" Scanner
 
 @enduml
