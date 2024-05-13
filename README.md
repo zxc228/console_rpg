@@ -61,6 +61,7 @@ src/
 |-- actions/
 |   |-- Action.java
 |   |-- PowerfulAttackDecorator.java
+    |-- NormalAttackDecorator.java
 |   |-- CriticalStrikeDecorator.java
 |-- characters/
 |   |-- Character.java
