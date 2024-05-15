@@ -6,7 +6,7 @@ public class DamageCalculator {
     private static DamageCalculator instance;
 
     private DamageCalculator() {
-        // Приватный конструктор предотвращает создание новых экземпляров
+        
     }
 
     public static synchronized DamageCalculator getInstance() {
@@ -18,8 +18,8 @@ public class DamageCalculator {
 
     public int calculateDamage(Character attacker, Character target) {
         int baseDamage = attacker.getStrength();
-        // Пример логики: урон уменьшается на 50% от выносливости цели
+        
         int damage = baseDamage - (target.getEndurance() / 2);
-        return Math.max(damage, 0); // Урон не может быть отрицательным
+        return Math.max(damage, 0); 
     }
 }
