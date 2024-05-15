@@ -30,7 +30,7 @@ This project is a console-based RPG game where the protagonist fights against en
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/zxc228/console-rpg-game.git
+    git clone https://github.com/zxc228/console-rpg.git
     cd console-rpg-game
     ```
 
