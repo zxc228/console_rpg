@@ -100,7 +100,7 @@ src/
 - **Strategy**: Interface for different strategies.
 - **AggressiveStrategy, BalancedStrategy**: Concrete strategies for the characters.
 - **Action**: Interface for actions performed by characters.
-- **PowerfulAttackDecorator, CriticalStrikeDecorator**: Decorators for enhancing character actions.
+- **PowerfulAttackDecorator, CriticalStrikeDecorator, NormalAttackDecorator**: Decorators for enhancing character actions.
 - **DamageCalculator**: Singleton for calculating damage.
 - **EnemyFactory**: Abstract factory for creating enemies.
 - **JungleEnemyFactory, SeaEnemyFactory**: Concrete factories for creating different types of enemies.
