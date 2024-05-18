@@ -101,7 +101,39 @@ src/
 - **DamageCalculator**: Singleton for calculating damage.
 - **EnemyFactory**: Abstract factory for creating enemies.
 - **JungleEnemyFactory, SeaEnemyFactory**: Concrete factories for creating different types of enemies.
+- 
+### How the Code Works
 
+1. **Initialization**:
+   - The game starts by prompting the player to enter the hero's name and choose a difficulty level.
+   - Based on the difficulty level, the initial attributes of the hero and the increments for subsequent enemies are set.
+
+2. **Game Flow**:
+   - The `GameController` manages the entire game flow. It initializes the game, manages battles, and handles user interactions.
+   - The main game loop in `GameController` continues until the hero is defeated or the player chooses to exit.
+
+3. **Combat**:
+   - Each battle is managed by the `startBattle` method in `GameController`. The player chooses a strategy and an action.
+   - Strategies (Aggressive, Balanced, Defensive) affect the hero's attributes during combat.
+   - Actions (Normal Attack, Powerful Attack, Critical Strike) determine the type of attack the hero performs.
+   - The `DamageCalculator` singleton is used to calculate the damage dealt to the enemy.
+
+4. **Enemies**:
+   - Enemies are generated using the Abstract Factory pattern. `JungleEnemyFactory` and `SeaEnemyFactory` create different types of enemies.
+   - The attributes of enemies are increased based on the difficulty level and the number of enemies defeated.
+
+5. **States**:
+   - The State pattern manages the states of characters (Normal, Wounded, Paralyzed).
+   - Characters transition between states based on their health.
+
+6. **Design Patterns**:
+   - **State**: Manages the state transitions of characters.
+   - **Strategy**: Allows the hero to adopt different combat strategies.
+   - **Decorator**: Enhances actions with additional behaviors.
+   - **Abstract Factory**: Creates various types of enemies.
+   - **Singleton**: Ensures a single instance of the damage calculator.
+   - **Facade**: Simplifies game management through the `GameController`.
+   
 ### Contributing
 
 1. Fork the repository.
