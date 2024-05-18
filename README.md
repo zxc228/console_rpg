@@ -23,8 +23,6 @@ This project is a console-based RPG game where the protagonist fights against en
 ### Prerequisites
 
 - Java Development Kit (JDK) 8 or higher
-- [Graphviz](http://www.graphviz.org/) (for generating diagrams with PlantUML)
-- [PlantUML](http://plantuml.com/) (for generating class diagrams)
 
 ### Installation
 
