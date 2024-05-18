@@ -101,7 +101,7 @@ src/
 - **DamageCalculator**: Singleton for calculating damage.
 - **EnemyFactory**: Abstract factory for creating enemies.
 - **JungleEnemyFactory, SeaEnemyFactory**: Concrete factories for creating different types of enemies.
-- 
+
 ### How the Code Works
 
 1. **Initialization**:
