@@ -10,7 +10,6 @@ This project is a console-based RPG game where the protagonist fights against en
 - Decorator pattern to handle character actions
 - Abstract factory pattern for creating different enemies
 - Singleton pattern for damage calculation
-- Template method pattern for enemy actions
 - Facade pattern for game controller
 - Difficulty levels: Easy, Medium, Hard
 
